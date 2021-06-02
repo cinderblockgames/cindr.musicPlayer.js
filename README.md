@@ -12,5 +12,26 @@ A plain-JavaScript, no-external-references music player management library.
 ### cindrM.song.seekTime
 
 # Events
+### play
+### pause
+### end
+### timeupdate
+### songchange
+### playlistchange
+### shufflechange
+### repeatchange
+### volumechange
 
 # Controls
+### play
+### pause
+### stop
+### next
+### previous
+### shuffle
+### repeat
+### volume
+### mute
+### progress
+### seek
+### buffer

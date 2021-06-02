@@ -1,9 +1,7 @@
 # cindr.musicPlayer.js
 A plain-JavaScript, no-external-references music player management library.
 
-{:toc}
-
-# Available Methods
+# Methods
 ## Song
 ### cindrM.song.play
 ### cindrM.song.pause
@@ -12,3 +10,7 @@ A plain-JavaScript, no-external-references music player management library.
 ### cindrM.song.next
 ### cindrM.song.seekPercent
 ### cindrM.song.seekTime
+
+# Events
+
+# Controls

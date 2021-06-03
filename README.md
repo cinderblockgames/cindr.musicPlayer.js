@@ -43,6 +43,7 @@ Sets the current time of the current song at the specified percent through the s
 ### cindrM.song.seekTime(time)
 Sets the current time of the current song.  Does not start the song playing if it is currently paused.
 
+
 ## Playlist
 
 
@@ -67,6 +68,7 @@ Plays the first song in the playlist.
 ### cindrM.playlist.seek(index)
 Plays the song at the specified (zero-based) index.
 
+
 ## Player
 
 
@@ -90,11 +92,12 @@ If shuffle is provided, shuffles or unshuffles the playlist.  If shuffle is not 
 
 If value is provided, sets the repeat type to the provided value.  If value is not provided, returns the current repeat type.
 
+
 ## UI Management
 
 
 ### cindrM.ui.monitor
-
+Enables management of the DOM for automated updates.  See [Controls](README.md#Controls) and [Display](README.md#Display) for information on how to set up your HTML to take advantage of this feature.
 
 ## Direct Access
 

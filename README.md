@@ -192,11 +192,11 @@ If the library is [managing your UI for you](README.md#ui-management), you can t
 All properties in your song object are available to your UI through the **data-cindrM-song-info** attribute.  For example, if you define a song like this:
 
     {
-      'album': 'Metallica',
-      'art': '/music/Metallica/Metallica/album-cover-art.png'
+      'album':  'Metallica',
+      'art':    '/music/Metallica/Metallica/album-cover-art.png'
       'artist': 'Metallica',
-      'name': 'Wherever I May Roam',
-      'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
+      'name':   'Wherever I May Roam',
+      'url':    '/music/Metallica/Metallica/Wherever I May Roam.mp3'
     }
 
 You could access all of the properties using the **data-cindrM-song-info** attribute:

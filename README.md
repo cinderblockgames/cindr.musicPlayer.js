@@ -62,7 +62,7 @@ Removes the song at the specified (zero-based) index and returns it.  If the rem
 Removes all songs from the playlist.
 
 ### cindrM.playlist.replace(songs)
-Replaces the playlist with the provided playlist.
+Replaces the playlist with the provided set of songs.
 
 ### cindrM.playlist.play
 Plays the first song in the playlist.

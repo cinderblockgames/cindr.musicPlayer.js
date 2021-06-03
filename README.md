@@ -1,5 +1,6 @@
 # cindr.musicPlayer.js
 A plain-JavaScript, no-external-references, music-player-management library.
+- [Setup and Basics](README.md#Setup-and-Basics)
 - [Methods](README.md#Methods)
   - [Song](README.md#Song)
   - [Playlist](README.md#Playlist)
@@ -8,6 +9,10 @@ A plain-JavaScript, no-external-references, music-player-management library.
 - [Events](README.md#Events)
 - [Controls](README.md#Controls)
 - [Display](README.md#Display)
+
+# Setup and Basics
+
+
 
 # Methods
 

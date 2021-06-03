@@ -208,7 +208,7 @@ You could access all of the properties using the **data-cindrM-song-info** attri
     by <span data-cindrM-song-info="artist"></span>
     (off their <span data-cindrM-song-info="album"></span> album).
 
-All properties are available outside your song list, where they will refer to the current song, as well as inside your song list, where they will refer to the song at that position in the playlist.
+All properties are available outside your [song list](README.md#song-list), where they will refer to the current song, as well as inside your [song list](README.md#song-list), where they will refer to the song at that position in the playlist.
 
 ## Song Meta
 
@@ -225,7 +225,7 @@ For example, you could display the play progress of the current song like this:
 
     <span data-cindrM-song-meta="currentTime-readable"></span> / <span data-cindrM-song-meta="duration-readable"></span>
 
-All properties are available outside your song list, where they will refer to the current song, but only the **index** and **index-readable** properties are available inside your song list, where they will refer to the song at that position in the playlist.
+All properties are available outside your [song list](README.md#song-list), where they will refer to the current song, but only the **index** and **index-readable** properties are available inside your [song list](README.md#song-list), where they will refer to the song at that position in the playlist.
 
 ## Song List
 

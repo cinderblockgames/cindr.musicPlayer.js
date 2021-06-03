@@ -137,10 +137,22 @@ This event is raised when the playback position of a song is updated, when the l
 - **buffered**: The collection of time ranges that have been [buffered](https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/buffering_seeking_time_ranges) for the song.
 
 ### songchange
+This event is raised when the current song changes.  The following custom data is provided:
 
+- **song**: The new current song.
+- **index**: The (zero-based) index of the new current song.
+- **index-readable**: The (one-based) index of the new current song.
+- **currentTime**: The playback position of the song, in seconds.
+- **currentTime-readable**: The playback position of the song, formatted to be human readable.
+- **duration**: The duration of the song, in seconds.
+- **duration-readable**: The duration of the song, formatted to be human readable.
 
 ### playlistchange
+This event is raised when the set of songs in the playlist changes.  The following custom data is provided:
 
+- **playlist**: The new set of songs in the playlist.
+- **index**: The (zero-based) index of the current song.
+- **index-readable**: The (one-based) index of the current song.
 
 ### shufflechange
 This event is raised when the shuffle state of the player changes.  The following custom data is provided:

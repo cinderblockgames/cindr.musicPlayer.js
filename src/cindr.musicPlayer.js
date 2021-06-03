@@ -648,7 +648,7 @@ const cindrM = new EventTarget();
           events.repeatchange();
         }
       } else {
-        output.info('No valid value sent to player.repeat(value); returning current repeat state.', value);
+        output.info('No valid value sent to player.repeat(value); returning current repeat type.', value);
         return player.repeat;
       }
     }

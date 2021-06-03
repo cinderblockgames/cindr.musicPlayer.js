@@ -369,7 +369,8 @@ const cindrM = new EventTarget();
 
     playlistchange: () => events.raise('playlistchange', {
       playlist: player.playlist,
-      index: player.index
+      index: player.index,
+      'index-readable': player.index + 1
     }),
 
     shufflechange: () => events.raise('shufflechange', {

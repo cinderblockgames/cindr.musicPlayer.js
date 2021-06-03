@@ -1,71 +1,3 @@
-﻿/*
-Songs must have the following:
-{
-  url
-}
-Any additional properties provided (e.g., name, artist, album, duration, art) will also be available via [data-cindrM-song-info].
-
-Additional available song information [data-cindrM-song-meta]:
- - index
- - index-readable
- - currentTime (only for playing song, not in song list)
- - currentTime-readable (only for playing song, not in song list)
- - duration (only for playing song, not in song list)
- - duration-readable (only for playing song, not in song list)
-
-Available control values [data-cindrM-control]:
- - play
- - pause
- - stop
- - next
- - previous
- - shuffle
- - repeat
- - volume
- - mute
- - progress
- - seek
- - buffer
-
-Available events:
- - play
- - pause
- - end
- - timeupdate
- - songchange
- - playlistchange
- - shufflechange
- - repeatchange
- - volumechange
-
-Available methods:
-  Song
-   - cindrM.song.play
-   - cindrM.song.pause
-   - cindrM.song.stop
-   - cindrM.song.previous
-   - cindrM.song.next
-   - cindrM.song.seekPercent
-   - cindrM.song.seekTime
-  Playlist
-   - cindrM.playlist.add
-   - cindrM.playlist.insert
-   - cindrM.playlist.remove
-   - cindrM.playlist.clear
-   - cindrM.playlist.replace
-   - cindrM.playlist.play
-   - cindrM.playlist.seek
-  Player
-   - cindrM.player.volume
-   - cindrM.player.mute
-   - cindrM.player.shuffle
-   - cindrM.player.repeat
-  UI Management
-   - cindrM.ui.monitor
-  Direct Access
-   - cindrM.getInternals (internals, including the audio player object) (making changes to the returned object is unsupported and can result in unpredictable behavior)
-*/
-
 /* global document */
 /* global console */
 /* global EventTarget */
@@ -586,28 +518,31 @@ const cindrM = new EventTarget();
 
     remove: function remove(index) {
       if (strict.gte(index, 0) && strict.lt(index, player.playlist.length)) {
+        let removed = null;
         if (index < player.index) {
-          player.playlist.splice(index, 1);
+          removed = player.playlist.splice(index, 1);
           player.index--;
         } else if (index == player.index) {
           player.audio.pause();
           player.audio.currentTime = 0;
           if ((player.index + 1) < player.playlist.length) {
-            player.playlist.splice(index, 1);
+            removed = player.playlist.splice(index, 1);
             cindr.playlist.seek(player.index);
           } else if (player.index > 0) {
-            player.playlist.splice(index, 1);
+            removed = player.playlist.splice(index, 1);
             player.index--;
-          } else {
+          } else { // if player.index == 0
+            removed = player.playlist;
             player.index = -1;
             player.playlist = [];
           }
         } else { // if (index > player.index)
-          player.playlist.splice(index, 1);
+          removed = player.playlist.splice(index, 1);
         }
 
         shuffler.reset();
         events.playlistchange();
+        return removed[0];
       } else {
         output.warn('Ignoring invalid value sent to playlist.remove(index).', index);
       }

@@ -1,5 +1,5 @@
 # cindr.musicPlayer.js
-A plain-JavaScript, no-external-references, music-player-management library.
+A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://music.cindr.media.
 
 - [Setup and Basics](README.md#Setup-and-Basics)
 - [Methods](README.md#Methods)
@@ -14,8 +14,6 @@ A plain-JavaScript, no-external-references, music-player-management library.
 
 # Setup and Basics
 
-
-You can see a demo of this library at https://music.cindr.media.
 
 
 # Methods

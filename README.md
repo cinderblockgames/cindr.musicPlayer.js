@@ -1,5 +1,6 @@
 # cindr.musicPlayer.js
 A plain-JavaScript, no-external-references, music-player-management library.
+
 - [Setup and Basics](README.md#Setup-and-Basics)
 - [Methods](README.md#Methods)
   - [Song](README.md#Song)
@@ -9,6 +10,7 @@ A plain-JavaScript, no-external-references, music-player-management library.
 - [Events](README.md#Events)
 - [Controls](README.md#Controls)
 - [Display](README.md#Display)
+
 
 # Setup and Basics
 
@@ -99,6 +101,9 @@ If value is provided, sets the repeat type to the provided value.  If value is n
 ### cindrM.ui.monitor
 Enables management of the DOM for automated updates.  See [Controls](README.md#Controls) and [Display](README.md#Display) for information on how to set up your HTML to take advantage of this feature.
 
+**NOTE:  Controls must be loaded into the DOM before this method is called in order for them to be managed by the library.**  All this method does is add the necessary event listeners.
+
+
 ## Direct Access
 
 
@@ -107,18 +112,40 @@ Returns the internal tracking object used by cindr.musicPlayer.js.  If you need 
 
 **NOTE:  Making changes to the internal tracking object is unsupported and can result in unpredictable behavior.**
 
+
 # Events
+Event listeners can be added for the below events by using the plain JavaScript method [**cindrM.addEventListener()**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) or the jQuery method [**$(cindrM).on()**](https://api.jquery.com/on/).  Any custom data is provided in the [detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) property.
+
 ### play
+This event is raised when a song starts playing.
+
 ### pause
+This event is raised when a song is paused.
+
 ### end
+This event is raised when a song completes playing.
+
 ### timeupdate
+This event is raised when the playback position of a song is updated, when the load progress of a song is updated, and when the metadata for a song is loaded.  The following custom data is provided:
+
+- **currentTime**: The playback position of the song, in seconds.
+- **currentTime-readable**: The playback position of the song, formatted to be human readable.
+- **duration**: The duration of the song, in seconds.
+- **duration-readable**: The duration of the song, formatted to be human readable.
+- **buffered**: The collection of time ranges that have been [buffered](https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/buffering_seeking_time_ranges) for the song.
+
 ### songchange
+
+
 ### playlistchange
 ### shufflechange
 ### repeatchange
 ### volumechange
 
+
 # Controls
+
+
 ### play
 ### pause
 ### stop
@@ -131,6 +158,7 @@ Returns the internal tracking object used by cindr.musicPlayer.js.  If you need 
 ### progress
 ### seek
 ### buffer
+
 
 # Display
 

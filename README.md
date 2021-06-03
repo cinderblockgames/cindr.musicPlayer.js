@@ -252,4 +252,4 @@ For example:
       </div>
     </div>
 
-The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  Their IDs will have their index appended, so the element for the first song will have **id="cindrM-song-container-0"**.
+The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  The repeated elements will have their index appended to their ID, so the element for the first song will be **id="cindrM-song-container-0"**.

@@ -186,9 +186,9 @@ This event is raised when the volume level or mute state of the player changes. 
 
 
 # Display
-If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your controls.
+If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your controls, and you can also have it manage your song list display.
 
-## data-cindrM-song-info
+## Song Info
 All properties in your song object are available to your UI through the **data-cindrM-song-info** attribute.  For example, if you define a song like this:
 
     {
@@ -210,7 +210,7 @@ You could access all of the properties using the **data-cindrM-song-info** attri
 
 All properties are available outside your song list, where they will refer to the current song, as well as inside your song list, where they will refer to the song at that position in the playlist.
 
-## data-cindrM-song-meta
+## Song Meta
 
 Additional information about songs is available to your UI through the **data-cindrM-song-meta** attribute.  The following values are supported:
 
@@ -226,3 +226,27 @@ For example, you could display the play progress of the current song like this:
     <span data-cindrM-song-meta="currentTime-readable"></span> / <span data-cindrM-song-meta="duration-readable"></span>
 
 All properties are available outside your song list, where they will refer to the current song, but only the **index** and **index-readable** properties are available inside your song list, where they will refer to the song at that position in the playlist.
+
+## Song List
+
+In order to manage your song list display, the library looks for two specific elements: one with ID **cindrM-song-list-container** and the other with ID **cindrM-song-container**.  **cindrM-song-list-container** defines the container that holds your song list, and **cindrM-song-container** defines the format of each song in that list.  For example:
+
+    <div class="list-container disable-text-selection" id="cindrM-song-list-container">
+      <div class="song" id="cindrM-song-container">
+        <span class="remove-song">&times;</span>
+
+        <span class="index">
+          <span class="song-index" data-cindrM-song-meta="index-readable"></span>
+          <span class="current-song fas fa-volume-up"></span>
+        </span>
+        <span class="info">
+          <span class="ellipsis" data-cindrM-song-info="name"></span>
+          <span class="ellipsis" data-cindrM-song-info="album"></span>
+        </span>
+        <span class="duration">
+          <span data-cindrM-song-info="duration"></span>
+        </span>
+      </div>
+    </div>
+
+The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.

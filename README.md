@@ -100,7 +100,9 @@ If value is provided, sets the repeat type to the provided value.  If value is n
 
 
 ### cindrM.getInternals
-(internals, including the audio player object) (making changes to the returned object is unsupported and can result in unpredictable behavior)
+Returns the internal tracking object used by cindr.musicPlayer.js.  If you need direct access to the audio element, you can find it by calling **cindrM.getInternals().audio**.
+
+**NOTE:  Making changes to the internal tracking object is unsupported and can result in unpredictable behavior.**
 
 # Events
 ### play

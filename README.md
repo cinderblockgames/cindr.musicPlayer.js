@@ -10,6 +10,9 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 - [Events](README.md#Events)
 - [Controls](README.md#Controls)
 - [Display](README.md#Display)
+  - [Song Info](README.md#song-info)
+  - [Song Meta](README.md#song-meta)
+  - [Song List](README.md#song-list)
 
 
 # Setup and Basics

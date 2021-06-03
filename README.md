@@ -186,10 +186,43 @@ This event is raised when the volume level or mute state of the player changes. 
 
 
 # Display
-
+If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your controls.
 
 ## data-cindrM-song-info
+All properties in your song object are available to your UI through the **data-cindrM-song-info** attribute.  For example, if you define a song like this:
 
+    {
+      'album': 'Metallica',
+      'art': '/music/Metallica/Metallica/album-cover-art.png'
+      'artist': 'Metallica',
+      'name': 'Wherever I May Roam',
+      'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
+    }
+
+You could access all of the properties using the **data-cindrM-song-info** attribute:
+
+    <img data-cindrM-song-info="art" />
+    
+    Now Playing:
+    <span data-cindrM-song-info="name"></span>
+    by <span data-cindrM-song-info="artist"></span>
+    (off their <span data-cindrM-song-info="album"></span> album).
+
+All properties are available outside your song list, where they will refer to the current song, as well as inside your song list, where they will refer to the song at that position in the playlist.
 
 ## data-cindrM-song-meta
 
+Additional information about songs is available to your UI through the **data-cindrM-song-meta** attribute.  The following values are supported:
+
+- **index**: The (zero-based) index of the song.
+- **index-readable**: The (one-based) index of the  song.
+- **currentTime**: The playback position of the song, in seconds.
+- **currentTime-readable**: The playback position of the song, formatted to be human readable.
+- **duration**: The duration of the song, in seconds.
+- **duration-readable**: The duration of the song, formatted to be human readable.
+
+For example, you could display the play progress of the current song like this:
+
+    <span data-cindrM-song-meta="currentTime-readable"></span> / <span data-cindrM-song-meta="duration-readable"></span>
+
+All properties are available outside your song list, where they will refer to the current song, but only the **index** and **index-readable** properties are available inside your song list, where they will refer to the song at that position in the playlist.

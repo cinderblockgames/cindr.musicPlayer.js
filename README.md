@@ -15,7 +15,7 @@ A plain-JavaScript, no-external-references, music-player-management library.
 # Setup and Basics
 
 
-You can see an example of this library in action at https://music.cindr.media.
+You can see a demo of this library at https://music.cindr.media.
 
 
 # Methods

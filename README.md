@@ -229,20 +229,23 @@ All properties are available outside your song list, where they will refer to th
 
 ## Song List
 
-In order to manage your song list display, the library looks for two specific elements: one with ID **cindrM-song-list-container** and the other with ID **cindrM-song-container**.  **cindrM-song-list-container** defines the container that holds your song list, and **cindrM-song-container** defines the format of each song in that list.  For example:
+In order to manage your song list display, the library looks for two specific elements: one with ID **cindrM-song-list-container** and the other with ID **cindrM-song-container**.  **cindrM-song-list-container** defines the container that holds your song list, and **cindrM-song-container** defines the format of each song in that list.
+
+For example:
 
     <div class="list-container disable-text-selection" id="cindrM-song-list-container">
       <div class="song" id="cindrM-song-container">
         <span class="remove-song">&times;</span>
-
+        
         <span class="index">
           <span class="song-index" data-cindrM-song-meta="index-readable"></span>
-          <span class="current-song fas fa-volume-up"></span>
         </span>
+        
         <span class="info">
           <span class="ellipsis" data-cindrM-song-info="name"></span>
           <span class="ellipsis" data-cindrM-song-info="album"></span>
         </span>
+        
         <span class="duration">
           <span data-cindrM-song-info="duration"></span>
         </span>

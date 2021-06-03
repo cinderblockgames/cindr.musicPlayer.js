@@ -14,7 +14,7 @@ Plays the current song at the current time.
 Pauses the current song.
 
 ### cindrM.song.stop
-Pauses the current song and resets the current time to 0.
+Pauses the current song and resets the current time to zero.
 
 ### cindrM.song.next
 Plays the next song in the playlist, cycling back to the beginning of the playlist if the current song is the last song in the playlist.
@@ -35,22 +35,22 @@ Sets the current time of the current song.  Does not start the song playing if i
 Adds the provided song to the end of the playlist.
 
 ### cindrM.playlist.insert(index, song)
-Inserts the provided song at the specified (0-based) index, pushing back any songs at or above the specified index.
+Inserts the provided song at the specified (zero-based) index, pushing back any songs at or above the specified index.
 
 ### cindrM.playlist.remove(index)
-Removes the song at the 
+Removes the song at the specified (zero-based) index and returns it.  If the removed song is the current song, the next song (if any) will start playing.
 
 ### cindrM.playlist.clear
+Removes all songs from the playlist.
 
-
-### cindrM.playlist.replace
-
+### cindrM.playlist.replace(songs)
+Replaces the playlist with the provided playlist.
 
 ### cindrM.playlist.play
+Plays the first song in the playlist.
 
-
-### cindrM.playlist.seek
-
+### cindrM.playlist.seek(index)
+Plays the song at the specified (zero-based) index.
 
 ## Player
 

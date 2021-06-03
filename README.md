@@ -15,6 +15,8 @@ A plain-JavaScript, no-external-references, music-player-management library.
 # Setup and Basics
 
 
+You can see an example of this library in action at https://music.cindr.media.
+
 
 # Methods
 
@@ -77,7 +79,7 @@ Plays the song at the specified (zero-based) index.
 ### cindrM.player.volume(volume)
 *Valid values: [0, 100]*
 
-If volume is provided, sets the player volume to the provided value.  If volume is not provided, returns the current volume.
+If volume is provided, sets the player volume level to the provided value.  If volume is not provided, returns the current volume level.
 
 ### cindrM.player.mute(mute)
 *Valid values: true, false*
@@ -138,10 +140,23 @@ This event is raised when the playback position of a song is updated, when the l
 
 
 ### playlistchange
-### shufflechange
-### repeatchange
-### volumechange
 
+
+### shufflechange
+This event is raised when the shuffle state of the player changes.  The following custom data is provided:
+
+- **shuffle**: The new [shuffle state](README.md#cindrmplayershuffleshuffle) of the player.
+
+### repeatchange
+This event is raised when the shuffle type of the player changes.  The following custom data is provided:
+
+- **repeat**: The new [repeat type](README.md#cindrmplayerrepeatvalue) of the player.
+
+### volumechange
+This event is raised when the volume level or mute state of the player changes.  The following custom data is provided:
+
+- **volume**: The new [volume level](README.md#cindrmplayervolumevolume) of the player.
+- **muted**: The new [mute state](README.md#cindrmplayermutemute) of the player.
 
 # Controls
 

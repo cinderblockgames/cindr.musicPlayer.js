@@ -36,7 +36,8 @@ Plays the next song in the playlist, cycling back to the beginning of the playli
 Plays the previous song in the playlist, cycling back to the end of the playlist if the current song is the first song in the playlist.
 
 ### cindrM.song.seekPercent(percent)
-Valid values: [0, 100]
+*Valid values: [0, 100]*
+
 Sets the current time of the current song at the specified percent through the song.  Does not start the song playing if it is currently paused.
 
 ### cindrM.song.seekTime(time)
@@ -70,19 +71,23 @@ Plays the song at the specified (zero-based) index.
 
 
 ### cindrM.player.volume(volume)
-Valid values: [0, 100]
+*Valid values: [0, 100]*
+
 If volume is provided, sets the player volume to the provided value.  If volume is not provided, returns the current volume.
 
 ### cindrM.player.mute(mute)
-Valid values: true, false
+*Valid values: true, false*
+
 If mute is provided, mutes or unmutes the player.  If mute is not provided, returns the current mute state.
 
 ### cindrM.player.shuffle(shuffle)
-Valid values: true, false
+*Valid values: true, false*
+
 If shuffle is provided, shuffles or unshuffles the playlist.  If shuffle is not provided, returns the current shuffle state.
 
 ### cindrM.player.repeat(value)
-Valid values: none, song, playlist
+*Valid values: none, song, playlist*
+
 If value is provided, sets the repeat type to the provided value.  If value is not provided, returns the current repeat type.
 
 ## UI Management

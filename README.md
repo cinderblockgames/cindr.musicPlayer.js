@@ -67,7 +67,7 @@ All songs are **required** to have a **url** property, so a minimum song object 
       'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
     }
 
-However, you can build out the song object with additional properties as you need, and all of the properties will be available to you via [display attributes](README.md#song-info).
+However, you can build out the song object with additional properties as you need, and all of the properties will be available to you via [display attributes](README.md#song-info) and anywhere you are provided a song or the playlist.
 
 # Methods
 

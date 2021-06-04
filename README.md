@@ -75,19 +75,19 @@ However, you can build out the song object with additional properties as you nee
 ## Song
 
 
-### cindrM.song.play
+### cindrM.song.play()
 Plays the current song at the current time.
 
-### cindrM.song.pause
+### cindrM.song.pause()
 Pauses the current song.
 
-### cindrM.song.stop
+### cindrM.song.stop()
 Pauses the current song and resets the current time to zero.
 
-### cindrM.song.next
+### cindrM.song.next()
 Plays the next song in the playlist, cycling back to the beginning of the playlist if the current song is the last song in the playlist.
 
-### cindrM.song.previous
+### cindrM.song.previous()
 Plays the previous song in the playlist, cycling back to the end of the playlist if the current song is the first song in the playlist.
 
 ### cindrM.song.seekPercent(percent)
@@ -111,13 +111,13 @@ Inserts the provided song at the specified (zero-based) index, pushing back any 
 ### cindrM.playlist.remove(index)
 Removes the song at the specified (zero-based) index and returns it.  If the removed song is the current song, the next song (if any) will start playing.
 
-### cindrM.playlist.clear
+### cindrM.playlist.clear()
 Removes all songs from the playlist.
 
 ### cindrM.playlist.replace(songs)
 Replaces the playlist with the provided set of songs.
 
-### cindrM.playlist.play
+### cindrM.playlist.play()
 Plays the first song in the playlist.
 
 ### cindrM.playlist.seek(index)
@@ -151,7 +151,7 @@ If value is provided, sets the repeat type to the provided value.  If value is n
 ## UI Management
 
 
-### cindrM.ui.monitor
+### cindrM.ui.monitor()
 Enables management of the DOM for automated updates.  See [Controls](README.md#Controls) and [Display](README.md#Display) for information on how to set up your HTML to take advantage of this feature.
 
 **NOTE:  Controls must be loaded into the DOM before this method is called in order for them to be managed by the library.**  All this method does is add the necessary event listeners.
@@ -160,7 +160,7 @@ Enables management of the DOM for automated updates.  See [Controls](README.md#C
 ## Direct Access
 
 
-### cindrM.getInternals
+### cindrM.getInternals()
 Returns the internal tracking object used by cindr.musicPlayer.js.  If you need direct access to the audio element, you can find it by calling **cindrM.getInternals().audio**.
 
 **NOTE:  Making changes to the internal tracking object is unsupported and can result in unpredictable behavior.**

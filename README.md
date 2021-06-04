@@ -237,22 +237,22 @@ A previous control will skip to the [previous](README.md#cindrmsongprevious) son
 A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class **cindrM-control-shuffling** while shuffle is enabled.
 
 ### repeat
-A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also 
+A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also have a class based on the current repeat type: **cindrM-control-repeat-none**, **cindrM-control-repeat-song**, or **cindrM-control-repeat-playlist**.
 
 ### volume
-A volume control will [unmute](README.md#cindrmplayermutemute) the player and set the volume to its current value on click and on change.  It will also
+A volume control will [unmute](README.md#cindrmplayermutemute) the player and set the volume to its current value on click and on change.
 
 ### mute
-A mute control will [mute or unmute](README.md#cindrmplayermutemute) the player on click.  It will also 
+A mute control will [mute or unmute](README.md#cindrmplayermutemute) the player on click.  It will also have the class **cindrM-control-muted** while the player is muted.
 
 ### progress
-A progress control will .
+A progress control will automatically update with the current song's playback position whenever the [timeupdate](README.md#timeupdate) event fires.
 
 ### seek
-A seek control will .
+A seek control will update the current song's playback position on click, based on the percent through the element of the user's click position.
 
 ### buffer
-A buffer control will .
+A buffer control will automatically update with the current song's buffering progress whenever the [timeupdate](README.md#timeupdate) event fires.  The buffer control
 
 # Display
 If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your elements, and you can also have it manage your song list display.
@@ -321,4 +321,4 @@ For example:
       </div>
     </div>
 
-The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  The repeated elements will have their index appended to their ID, so the element for the first song will be **id="cindrM-song-container-0"**.
+The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  The repeated elements will have their index appended to their ID, so the element for the first song will be **id="cindrM-song-container-0"**.  Also, the current song element will have the class **cindrM-current-song**.

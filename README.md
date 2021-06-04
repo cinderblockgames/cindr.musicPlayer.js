@@ -214,24 +214,48 @@ This event is raised when the volume level or mute state of the player changes. 
 - **muted**: The new [mute state](README.md#cindrmplayermutemute) of the player.
 
 # Controls
+If the library is [managing your UI for you](README.md#ui-management), you can designate elements to control certain actions by using the **data-cindrM-control** attribute.  Multiple values can be provided by separating them with a space; for example, you might define a progress bar to show the current song progress *and* allow seeking to different times in the song like so:
 
+    <progress data-cindrM-control="progress seek"></progress>
 
 ### play
-### pause
-### stop
-### next
-### previous
-### shuffle
-### repeat
-### volume
-### mute
-### progress
-### seek
-### buffer
+A play control will [play](README.md#cindrmsongplay) the current song on click.  It will also have the class **cindrM-control-playing** while a song is playing.
 
+### pause
+A pause control will [pause](README.md#cindrmsongpause) the current song on click.  It will also have the class **cindrM-control-paused** while no song is playing.
+
+### stop
+A stop control will [stop](README.md#cindrmsongstop) the current song on click.  It will also have the class **cindrM-control-paused** while no song is playing.
+
+### next
+A next control will skip to the [next](README.md#cindrmsongnext) song on click.
+
+### previous
+A previous control will skip to the [previous](README.md#cindrmsongprevious) song on click.
+
+### shuffle
+A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class **cindrM-control-shuffling** while shuffle is enabled.
+
+### repeat
+A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also 
+
+### volume
+A volume control will [unmute](README.md#cindrmplayermutemute) the player and set the volume to its current value on click and on change.  It will also
+
+### mute
+A mute control will [mute or unmute](README.md#cindrmplayermutemute) the player on click.  It will also 
+
+### progress
+A progress control will .
+
+### seek
+A seek control will .
+
+### buffer
+A buffer control will .
 
 # Display
-If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your controls, and you can also have it manage your song list display.
+If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your elements, and you can also have it manage your song list display.
 
 ## Song Info
 All properties in your song object are available to your UI through the **data-cindrM-song-info** attribute.  For example, if you define a song like this:

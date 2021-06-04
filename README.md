@@ -252,7 +252,7 @@ A progress control will automatically update with the current song's playback po
 A seek control will update the current song's playback position on click, based on the percent through the element of the user's click position.
 
 ### buffer
-A buffer control will automatically update with the current song's buffering progress whenever the [timeupdate](README.md#timeupdate) event fires.  The buffer control
+A buffer control will automatically update with the current song's buffering progress whenever the [timeupdate](README.md#timeupdate) event fires.  The buffer control takes a simplistic approach to displaying the buffering progress by only taking into account the furthest buffered range.
 
 # Display
 If the library is [managing your UI for you](README.md#ui-management), you can tell it where to output certain values by adding the **data-cindrM-song-info** and **data-cindrM-song-meta** attributes to your elements, and you can also have it manage your song list display.

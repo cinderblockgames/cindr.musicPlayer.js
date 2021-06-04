@@ -59,7 +59,14 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 
 # Setup and Basics
 
+## Song Object Structure
+All songs are **required** to have a **url** property provided, so a minimum song object might look like this:
 
+    {
+      'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
+    }
+
+However, you can build out the song object with as many properties as you would like, and all of the properties will be available to you via [display attributes](README.md#song-info).
 
 # Methods
 

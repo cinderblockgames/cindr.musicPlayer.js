@@ -1,71 +1,3 @@
-﻿/*
-Songs must have the following:
-{
-  url
-}
-Any additional properties provided (e.g., name, artist, album, duration, art) will also be available via [data-cindrM-song-info].
-
-Additional available song information [data-cindrM-song-meta]:
- - index
- - index-readable
- - currentTime (only for playing song, not in song list)
- - currentTime-readable (only for playing song, not in song list)
- - duration (only for playing song, not in song list)
- - duration-readable (only for playing song, not in song list)
-
-Available control values [data-cindrM-control]:
- - play
- - pause
- - stop
- - next
- - previous
- - shuffle
- - repeat
- - volume
- - mute
- - progress
- - seek
- - buffer
-
-Available events:
- - play
- - pause
- - end
- - timeupdate
- - songchange
- - playlistchange
- - shufflechange
- - repeatchange
- - volumechange
-
-Available methods:
-  Song
-   - cindrM.song.play
-   - cindrM.song.pause
-   - cindrM.song.stop
-   - cindrM.song.previous
-   - cindrM.song.next
-   - cindrM.song.seekPercent
-   - cindrM.song.seekTime
-  Playlist
-   - cindrM.playlist.add
-   - cindrM.playlist.insert
-   - cindrM.playlist.remove
-   - cindrM.playlist.clear
-   - cindrM.playlist.replace
-   - cindrM.playlist.play
-   - cindrM.playlist.seek
-  Player
-   - cindrM.player.volume
-   - cindrM.player.mute
-   - cindrM.player.shuffle
-   - cindrM.player.repeat
-  UI Management
-   - cindrM.ui.monitor
-  Direct Access
-   - cindrM.getInternals (internals, including the audio player object) (making changes to the returned object is unsupported and can result in unpredictable behavior)
-*/
-
 /* global document */
 /* global console */
 /* global EventTarget */
@@ -233,30 +165,30 @@ const cindrM = new EventTarget();
 
     playControl: function playControl() {
       document.querySelectorAll('[data-cindrM-control~="play"]')
-        .forEach(node => node.classList.add('cindrM-control-playing'));
+        .forEach(node => node.classList.add('cindrM-playing'));
 
       ['pause', 'stop'].forEach(control => {
         document.querySelectorAll('[data-cindrM-control~="' + control + '"]')
-          .forEach(node => node.classList.remove('cindrM-control-paused'));
+          .forEach(node => node.classList.remove('cindrM-paused'));
       });
     },
 
     pauseControl: function pauseControl() {
       document.querySelectorAll('[data-cindrM-control~="play"]')
-        .forEach(node => node.classList.remove('cindrM-control-playing'));
+        .forEach(node => node.classList.remove('cindrM-playing'));
 
       ['pause', 'stop'].forEach(control => {
         document.querySelectorAll('[data-cindrM-control~="' + control + '"]')
-          .forEach(node => node.classList.add('cindrM-control-paused'));
+          .forEach(node => node.classList.add('cindrM-paused'));
       });
     },
 
     shuffleControl: function shuffleControl(event) {
       const nodes = document.querySelectorAll('[data-cindrM-control~="shuffle"]');
       if (event.detail.shuffle) {
-        nodes.forEach(node => node.classList.add('cindrM-control-shuffling'));
+        nodes.forEach(node => node.classList.add('cindrM-shuffling'));
       } else {
-        nodes.forEach(node => node.classList.remove('cindrM-control-shuffling'));
+        nodes.forEach(node => node.classList.remove('cindrM-shuffling'));
       }
     },
 
@@ -265,18 +197,18 @@ const cindrM = new EventTarget();
       const nodes = document.querySelectorAll('[data-cindrM-control~="repeat"]');
       if (type == 'none') {
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-playlist');
-          node.classList.add('cindrM-control-repeat-none');
+          node.classList.remove('cindrM-repeating-playlist');
+          node.classList.add('cindrM-repeating-none');
         });
       } else if (type == 'song') {
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-none');
-          node.classList.add('cindrM-control-repeat-song');
+          node.classList.remove('cindrM-repeating-none');
+          node.classList.add('cindrM-repeating-song');
         });
       } else { // if (type == 'playlist')
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-song');
-          node.classList.add('cindrM-control-repeat-playlist');
+          node.classList.remove('cindrM-repeating-song');
+          node.classList.add('cindrM-repeating-playlist');
         });
       }
     },
@@ -289,9 +221,9 @@ const cindrM = new EventTarget();
     muteControl: function muteControl(event) {
       const nodes = document.querySelectorAll('[data-cindrM-control~="mute"]');
       if (event.detail.muted) {
-        nodes.forEach(node => node.classList.add('cindrM-control-muted'));
+        nodes.forEach(node => node.classList.add('cindrM-muted'));
       } else {
-        nodes.forEach(node => node.classList.remove('cindrM-control-muted'));
+        nodes.forEach(node => node.classList.remove('cindrM-muted'));
       }
     },
 
@@ -437,7 +369,8 @@ const cindrM = new EventTarget();
 
     playlistchange: () => events.raise('playlistchange', {
       playlist: player.playlist,
-      index: player.index
+      index: player.index,
+      'index-readable': player.index + 1
     }),
 
     shufflechange: () => events.raise('shufflechange', {
@@ -586,28 +519,31 @@ const cindrM = new EventTarget();
 
     remove: function remove(index) {
       if (strict.gte(index, 0) && strict.lt(index, player.playlist.length)) {
+        let removed = null;
         if (index < player.index) {
-          player.playlist.splice(index, 1);
+          removed = player.playlist.splice(index, 1);
           player.index--;
         } else if (index == player.index) {
           player.audio.pause();
           player.audio.currentTime = 0;
           if ((player.index + 1) < player.playlist.length) {
-            player.playlist.splice(index, 1);
+            removed = player.playlist.splice(index, 1);
             cindr.playlist.seek(player.index);
           } else if (player.index > 0) {
-            player.playlist.splice(index, 1);
+            removed = player.playlist.splice(index, 1);
             player.index--;
-          } else {
+          } else { // if player.index == 0
+            removed = player.playlist;
             player.index = -1;
             player.playlist = [];
           }
         } else { // if (index > player.index)
-          player.playlist.splice(index, 1);
+          removed = player.playlist.splice(index, 1);
         }
 
         shuffler.reset();
         events.playlistchange();
+        return removed[0];
       } else {
         output.warn('Ignoring invalid value sent to playlist.remove(index).', index);
       }
@@ -713,7 +649,7 @@ const cindrM = new EventTarget();
           events.repeatchange();
         }
       } else {
-        output.info('No valid value sent to player.repeat(value); returning current repeat state.', value);
+        output.info('No valid value sent to player.repeat(value); returning current repeat type.', value);
         return player.repeat;
       }
     }
@@ -750,7 +686,7 @@ const cindrM = new EventTarget();
         // play
         document.querySelectorAll('[data-cindrM-control~="play"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-playing')) {
+            if (!this.classList.contains('cindrM-playing')) {
               cindr.song.play();
             }
           })
@@ -760,7 +696,7 @@ const cindrM = new EventTarget();
         // pause
         document.querySelectorAll('[data-cindrM-control~="pause"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-paused')) {
+            if (!this.classList.contains('cindrM-paused')) {
               cindr.song.pause();
             }
           })
@@ -770,7 +706,7 @@ const cindrM = new EventTarget();
         // stop
         document.querySelectorAll('[data-cindrM-control~="stop"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-paused')) {
+            if (!this.classList.contains('cindrM-paused')) {
               cindr.song.stop();
             }
           })

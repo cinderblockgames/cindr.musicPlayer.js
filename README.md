@@ -1,9 +1,10 @@
 # cindr.musicPlayer.js
 A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://music.cindr.media.
 
-- [Setup and Basics](README.md#Setup-and-Basics)
-- [Methods](README.md#Methods)
-  - [Song](README.md#Song)
+- [Setup and Basics](README.md#setup-and-basics)
+  - [Song Object Structure](README.md#song-object-structure)
+- [Methods](README.md#methods)
+  - [Song](README.md#song)
     - [Play](README.md#cindrmsongplay)
     - [Pause](README.md#cindrmsongpause)
     - [Stop](README.md#cindrmsongstop)
@@ -11,7 +12,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
     - [Previous](README.md#cindrmsongprevious)
     - [Seek (Percent)](README.md#cindrmsongseekpercentpercent)
     - [Seek (Time)](README.md#cindrmsongseektimetime)
-  - [Playlist](README.md#Playlist)
+  - [Playlist](README.md#playlist)
     - [Add Song](README.md#cindrmplaylistaddsong)
     - [Insert Song](README.md#cindrmplaylistinsertindex-song)
     - [Remove Song](README.md#cindrmplaylistremoveindex)
@@ -19,16 +20,16 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
     - [Replace Playlist](README.md#cindrmplaylistreplacesongs)
     - [Play From Beginning](README.md#cindrmplaylistplay)
     - [Play At Index](README.md#cindrmplaylistseekindex)
-  - [Player](README.md#Player)
+  - [Player](README.md#player)
     - [Get/Set Volume](README.md#cindrmplayervolumevolume)
     - [Mute/Unmute](README.md#cindrmplayermutemute)
     - [Shuffle](README.md#cindrmplayershuffleshuffle)
     - [Repeat One/All](README.md#cindrmplayerrepeatvalue)
   - [UI Management](README.md#ui-management)
     - [Monitor UI](README.md#cindrmuimonitor)
-  - [Direct Access](README.md#Direct-Access)
+  - [Direct Access](README.md#direct-access)
     - [Get Internals](README.md#cindrmgetinternals)
-- [Events](README.md#Events)
+- [Events](README.md#events)
   - [play](README.md#play)
   - [pause](README.md#pause)
   - [end](README.md#end)
@@ -38,7 +39,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
   - [shufflechange](README.md#shufflechange)
   - [repeatchange](README.md#repeatchange)
   - [volumechange](README.md#volumechange)
-- [Controls](README.md#Controls)
+- [Controls](README.md#controls)
   - [Play](README.md#play-1)
   - [Pause](README.md#pause-1)
   - [Stop](README.md#stop)
@@ -51,7 +52,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
   - [Progress](README.md#progress)
   - [Seek](README.md#seek)
   - [Buffer](README.md#buffer)
-- [Display](README.md#Display)
+- [Display](README.md#display)
   - [Song Info](README.md#song-info)
   - [Song Meta](README.md#song-meta)
   - [Song List](README.md#song-list)
@@ -66,7 +67,7 @@ All songs are **required** to have a **url** property provided, so a minimum son
       'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
     }
 
-However, you can build out the song object with as many properties as you would like, and all of the properties will be available to you via [display attributes](README.md#song-info).
+However, you can build out the song object with additional properties as you need, and all of the properties will be available to you via [display attributes](README.md#song-info).
 
 # Methods
 

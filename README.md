@@ -222,7 +222,7 @@ This event is raised when the volume level or mute state of the player changes. 
 - **muted**: The new [mute state](README.md#cindrmplayermutemute) of the player.
 
 # Controls
-If the library is [managing your UI for you](README.md#ui-management), you can designate elements to control certain actions by using the **data-cindrM-control** attribute.  Multiple values can be provided by separating them with a space; for example, you might define a progress bar to show the current song progress *and* allow seeking to different times in the song like so:
+If the library is [managing your UI for you](README.md#ui-management), you can designate elements to control certain actions by using the **data-cindrM-control** attribute.  Multiple values can be provided by separating them with a space; for example, you might define a progress bar to show the current song playback position *and* allow seeking to different times in the song like so:
 
     <progress data-cindrM-control="progress seek"></progress>
 

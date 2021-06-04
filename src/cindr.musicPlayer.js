@@ -165,30 +165,30 @@ const cindrM = new EventTarget();
 
     playControl: function playControl() {
       document.querySelectorAll('[data-cindrM-control~="play"]')
-        .forEach(node => node.classList.add('cindrM-control-playing'));
+        .forEach(node => node.classList.add('cindrM-playing'));
 
       ['pause', 'stop'].forEach(control => {
         document.querySelectorAll('[data-cindrM-control~="' + control + '"]')
-          .forEach(node => node.classList.remove('cindrM-control-paused'));
+          .forEach(node => node.classList.remove('cindrM-paused'));
       });
     },
 
     pauseControl: function pauseControl() {
       document.querySelectorAll('[data-cindrM-control~="play"]')
-        .forEach(node => node.classList.remove('cindrM-control-playing'));
+        .forEach(node => node.classList.remove('cindrM-playing'));
 
       ['pause', 'stop'].forEach(control => {
         document.querySelectorAll('[data-cindrM-control~="' + control + '"]')
-          .forEach(node => node.classList.add('cindrM-control-paused'));
+          .forEach(node => node.classList.add('cindrM-paused'));
       });
     },
 
     shuffleControl: function shuffleControl(event) {
       const nodes = document.querySelectorAll('[data-cindrM-control~="shuffle"]');
       if (event.detail.shuffle) {
-        nodes.forEach(node => node.classList.add('cindrM-control-shuffling'));
+        nodes.forEach(node => node.classList.add('cindrM-shuffling'));
       } else {
-        nodes.forEach(node => node.classList.remove('cindrM-control-shuffling'));
+        nodes.forEach(node => node.classList.remove('cindrM-shuffling'));
       }
     },
 
@@ -197,18 +197,18 @@ const cindrM = new EventTarget();
       const nodes = document.querySelectorAll('[data-cindrM-control~="repeat"]');
       if (type == 'none') {
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-playlist');
-          node.classList.add('cindrM-control-repeat-none');
+          node.classList.remove('cindrM-repeating-playlist');
+          node.classList.add('cindrM-repeating-none');
         });
       } else if (type == 'song') {
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-none');
-          node.classList.add('cindrM-control-repeat-song');
+          node.classList.remove('cindrM-repeating-none');
+          node.classList.add('cindrM-repeating-song');
         });
       } else { // if (type == 'playlist')
         nodes.forEach(node => {
-          node.classList.remove('cindrM-control-repeat-song');
-          node.classList.add('cindrM-control-repeat-playlist');
+          node.classList.remove('cindrM-repeating-song');
+          node.classList.add('cindrM-repeating-playlist');
         });
       }
     },
@@ -221,9 +221,9 @@ const cindrM = new EventTarget();
     muteControl: function muteControl(event) {
       const nodes = document.querySelectorAll('[data-cindrM-control~="mute"]');
       if (event.detail.muted) {
-        nodes.forEach(node => node.classList.add('cindrM-control-muted'));
+        nodes.forEach(node => node.classList.add('cindrM-muted'));
       } else {
-        nodes.forEach(node => node.classList.remove('cindrM-control-muted'));
+        nodes.forEach(node => node.classList.remove('cindrM-muted'));
       }
     },
 
@@ -686,7 +686,7 @@ const cindrM = new EventTarget();
         // play
         document.querySelectorAll('[data-cindrM-control~="play"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-playing')) {
+            if (!this.classList.contains('cindrM-playing')) {
               cindr.song.play();
             }
           })
@@ -696,7 +696,7 @@ const cindrM = new EventTarget();
         // pause
         document.querySelectorAll('[data-cindrM-control~="pause"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-paused')) {
+            if (!this.classList.contains('cindrM-paused')) {
               cindr.song.pause();
             }
           })
@@ -706,7 +706,7 @@ const cindrM = new EventTarget();
         // stop
         document.querySelectorAll('[data-cindrM-control~="stop"]').forEach(node =>
           node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-control-paused')) {
+            if (!this.classList.contains('cindrM-paused')) {
               cindr.song.stop();
             }
           })

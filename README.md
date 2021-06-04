@@ -61,7 +61,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 # Setup and Basics
 
 ## Song-Object Structure
-All songs are **required** to have a **url** property provided, so a minimum song object might look like this:
+All songs are **required** to have a **url** property, so a minimum song object might look like this:
 
     {
       'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'

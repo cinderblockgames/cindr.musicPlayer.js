@@ -2,7 +2,7 @@
 A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://music.cindr.media.
 
 - [Setup and Basics](README.md#setup-and-basics)
-  - [Song Object Structure](README.md#song-object-structure)
+  - [Song-Object Structure](README.md#song-object-structure)
 - [Methods](README.md#methods)
   - [Song](README.md#song)
     - [Play](README.md#cindrmsongplay)
@@ -60,7 +60,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 
 # Setup and Basics
 
-## Song Object Structure
+## Song-Object Structure
 All songs are **required** to have a **url** property provided, so a minimum song object might look like this:
 
     {

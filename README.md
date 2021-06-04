@@ -219,13 +219,13 @@ If the library is [managing your UI for you](README.md#ui-management), you can d
     <progress data-cindrM-control="progress seek"></progress>
 
 ### play
-A play control will [play](README.md#cindrmsongplay) the current song on click.  It will also have the class **cindrM-control-playing** while a song is playing.
+A play control will [play](README.md#cindrmsongplay) the current song on click.  It will also have the class **cindrM-playing** while a song is playing.
 
 ### pause
-A pause control will [pause](README.md#cindrmsongpause) the current song on click.  It will also have the class **cindrM-control-paused** while no song is playing.
+A pause control will [pause](README.md#cindrmsongpause) the current song on click.  It will also have the class **cindrM-paused** while no song is playing.
 
 ### stop
-A stop control will [stop](README.md#cindrmsongstop) the current song on click.  It will also have the class **cindrM-control-paused** while no song is playing.
+A stop control will [stop](README.md#cindrmsongstop) the current song on click.  It will also have the class **cindrM-paused** while no song is playing.
 
 ### next
 A next control will skip to the [next](README.md#cindrmsongnext) song on click.
@@ -234,16 +234,16 @@ A next control will skip to the [next](README.md#cindrmsongnext) song on click.
 A previous control will skip to the [previous](README.md#cindrmsongprevious) song on click.
 
 ### shuffle
-A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class **cindrM-control-shuffling** while shuffle is enabled.
+A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class **cindrM-shuffling** while shuffle is enabled.
 
 ### repeat
-A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also have a class based on the current repeat type: **cindrM-control-repeat-none**, **cindrM-control-repeat-song**, or **cindrM-control-repeat-playlist**.
+A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also have a class based on the current repeat type: **cindrM-repeating-none**, **cindrM-repeating-song**, or **cindrM-repeating-playlist**.
 
 ### volume
 A volume control will [unmute](README.md#cindrmplayermutemute) the player and set the volume to its current value on click and on change.
 
 ### mute
-A mute control will [mute or unmute](README.md#cindrmplayermutemute) the player on click.  It will also have the class **cindrM-control-muted** while the player is muted.
+A mute control will [mute or unmute](README.md#cindrmplayermutemute) the player on click.  It will also have the class **cindrM-muted** while the player is muted.
 
 ### progress
 A progress control will automatically update with the current song's playback position whenever the [timeupdate](README.md#timeupdate) event fires.

@@ -1,0 +1,350 @@
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+<script src="https://kit.fontawesome.com/c6fcb894f6.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://unpkg.com/jquery@3.4.1/dist/jquery.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js@0.0.2/src/cindr.musicPlayer.min.js" crossorigin="anonymous"></script>
+
+<title>cindr.musicPlayer.js demo</title>
+
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+
+    --bg: #EBEBEB;
+    --black: #333333;
+    --prog: #A4B7BE;
+  }
+
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+  }
+
+  .player {
+    width: 80%;
+    max-width: 275px;
+    min-height: 550px;
+    margin: 2rem auto;
+    padding: 3rem 1.25rem;
+    background: var(--bg);
+    box-shadow: 20px 20px 60px #c8c8c8, 
+                -20px -20px 60px #ffffff;
+    border-radius: 15px;
+    border: 1px solid rgb(223, 223, 223);
+    position: relative;
+  }
+  .player::before {
+    content: '';
+    display: block;
+    background: #333;
+    width: 100px;
+    height: 20px;
+    border-radius: 0 0 50% 50%; 
+    position: absolute;
+    top: 0;
+    left: 87px;
+  }
+
+  .header {
+    height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .header > .button {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    color: var(--black);
+    background: linear-gradient(145deg, #fbfbfb, #d4d4d4);
+    box-shadow:  4px 4px 7px #cccccc, 
+                 -4px -4px 7px #ffffff;
+    border-radius: 6px;
+  }
+
+  .art {
+    display: block;
+    width: 175px;
+    height: 175px;
+    margin: 1rem auto;
+    border-radius: 50%;
+    border: 12px solid #EBEBED;
+    box-shadow:  16px 16px 57px #acacac, 
+                -16px -16px 57px #ffffff;
+  }
+
+  .info {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .info h1 {
+    color: var(--black);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .info p {
+    font-size: 1.15rem;
+    color: var(--prog);
+  }
+
+  .prog {
+    padding: 10px 0;
+  }
+  .prog-time {
+    padding: 3px 5px;
+    color: var(--prog);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+  }
+  .prog-time > p {
+    font-size: 0.65rem;
+  }
+
+  .prog-bar {
+    width: 100%;
+    height: 10px;
+    padding: 1px;
+    border-radius: 25px;
+
+    background: linear-gradient(145deg, #fbfbfb, #d4d4d4);
+    box-shadow:  5px 5px 10px #a5a5a5, 
+                -5px -5px 10px #ffffff;
+
+  }
+
+  .prog-bar-inner {
+    height: 8px;
+    background: #ddd;
+    border-radius: 25px;
+  }
+
+  .buttons {
+    margin: 2rem 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button {
+    color: var(--prog);
+    border-radius: 50%;
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px #d4d4d4, 
+                -5px -5px 10px #ffffff;
+  }
+
+  .button-sm {
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.75;
+  }
+
+  .button-md {
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.85;
+  }
+  .button-lg {
+    width: 3.25rem;
+    height: 3.25rem;
+    box-shadow: inset 6px 6px 12px #c8c8c8, 
+            inset -6px -6px 12px #ffffff
+  }
+
+
+  .bar {
+    width: 50%;
+    height: 2px;
+    margin: auto;
+    background: var(--prog);
+    border-radius: 25px;
+    position: absolute;
+    left: 25%;
+    bottom: 1rem;
+  }
+
+  .credit {
+    background: linear-gradient(45deg, #3297D3, #8FEFFB);
+    color: var(--black);
+    padding: 1rem 0;
+    text-align: center;
+  }
+
+  .ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .button {
+    cursor: pointer;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: transparent;
+  }
+
+  progress[data-cindrM-control~="progress"] {
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+  }
+
+  progress[data-cindrM-control~="progress"]::-webkit-progress-value {
+    background: linear-gradient(45deg, #3297D3, #8FEFFB);
+    color: var(--black);
+    border-radius: 25px;
+  }
+
+  .cindrM-playing[data-cindrM-control="play"],
+  .cindrM-paused[data-cindrM-control="pause"] {
+    display: none;
+  }
+
+  .cindrM-shuffling[data-cindrM-control="shuffle"],
+  .cindrM-repeating-song[data-cindrM-control="repeat"],
+  .cindrM-repeating-playlist[data-cindrM-control="repeat"] {
+    background: #8FEFFB;
+  }
+
+  /* https://micheljansen.org/blog/entry/1174 */
+  .gifsolution {
+    background-image: url(data:image/gif;base64,R0lGODlhAQABAPAAAP8AAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==);
+    background-position: -1px 0;
+    background-repeat: repeat-y;
+    background-size: 0%;
+    overflow: hidden;
+  }
+</style>
+  
+</head>
+<body>
+
+  <main class="player">
+    <div class="header">
+      <span class="button">
+        <span class="fas fa-bars" aria-hidden="true"></span>
+        <span class="sr-only">menu bar</span>
+      </span>
+      <p>Now Playing</p>
+      <span class="button">
+        <span class="fas fa-search" aria-hidden="true"></span>
+        <span class="sr-only">Search</span>
+      </span>
+    </div>
+    <img alt="album art" class="art" data-cindrM-song-info="art" />
+    <div class="info">
+      <h1 class="ellipsis" data-cindrM-song-info="name"></h1>
+      <p class="ellipsis" data-cindrM-song-info="artist"></p>
+    </div>
+    <div class="prog">
+      <div class="prog-time">
+        <p class="left" data-cindrM-song-meta="currentTime-readable"></p>
+        <p class="right" data-cindrM-song-meta="duration-readable"></p>
+      </div>
+      <div class="prog-bar">
+        <progress class="prog-bar-inner gifsolution" data-cindrM-control="progress seek"></progress>
+      </div>
+    </div>
+    <ul class="buttons">
+      <span class="button button-sm" data-cindrM-control="shuffle">
+        <span class="fas fa-random fa-sm" aria-hidden="true"></span>
+        <span class="sr-only">Shuffle</span>
+      </span>
+      <span class="button button-md" data-cindrM-control="previous">
+        <span class="fas fa-step-backward" aria-hidden="true"></span>
+        <span class="sr-only">Previous Song</span>
+      </span>
+      <span class="button button-lg" data-cindrM-control="play">
+        <span class="fas fa-play fa-lg" aria-hidden="true" aria-hidden="true"></span>
+        <span class="sr-only">Play</span>
+      </span>
+      <span class="button button-lg" data-cindrM-control="pause">
+        <span class="fas fa-pause fa-lg" aria-hidden="true" aria-hidden="true"></span>
+        <span class="sr-only">Pause</span>
+      </span>
+      <span class="button button-md" data-cindrM-control="next">
+        <span class="fas fa-step-forward"></span>
+        <span class="sr-only">Next Song</span>
+      </span>
+      <span class="button button-sm" data-cindrM-control="repeat">
+        <span class="fas fa-circle-notch fa-sm" aria-hidden="true"></span>
+        <span class="sr-only">Repeat</span>
+      </span>
+    </ul>
+    <div class="bar"></div>
+  </main>
+  
+  <section class="credit">
+    <p><a href="https://jsfiddle.net/cinderblockgames/q7d6ejg5/">[JSFiddle]</a></p>
+    <p><a href="https://codepen.io/TutulDevs/pen/eYZJmBL">[Design]</a> <a href="https://musopen.org/">[Music]</a> <a href="https://pixabay.com/">[Images1]</a> <a href="https://www.pexels.com/">[Images2]</a></p>
+  </section>
+  
+  <a target="_blank" href="https://github.com/cinderblockgames/cindr.musicPlayer.js" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+<script type="text/javascript">
+  $(function () {
+    cindrM.ui.monitor();
+    cindrM.playlist.replace([
+      {
+        url     : 'https://music.cindr.media/music/bach/Brandenburg Concerto no. 1 in F major, BWV. 1046 - I. Allegro.mp3',
+        art     : 'https://music.cindr.media/music/bach/pexels-aramis-cartam-2528455.jpg',
+        artist  : 'Johann Sebastian Bach',
+        name    : 'Brandenburg Concerto no. 1 in F major, BWV. 1046 - I. Allegro',
+        duration: '4:51'
+      },
+      {
+        url     : 'https://music.cindr.media/music/beethoven/Symphony No. 8 in F Major, Op. 93 - III. Tempo di menuetto.mp3',
+        art     : 'https://music.cindr.media/music/beethoven/pexels-benjamin-lehman-7325138.jpg',
+        artist  : 'Ludwig van Beethoven',
+        name    : 'Symphony No. 8 in F Major, Op. 93 - III. Tempo di menuetto',
+        duration: '4:58'
+      },
+      {
+        url     : 'https://music.cindr.media/music/chopin/Etude Op. 25 no. 8 in D flat major - \'Sixths\'.mp3',
+        art     : 'https://music.cindr.media/music/chopin/music-1312562_1280.jpg',
+        artist  : 'Frédéric Chopin',
+        name    : 'Etude Op. 25 no. 8 in D flat major - \'Sixths\'',
+        duration: '1:04'
+      },
+      {
+        url     : 'https://music.cindr.media/music/mozart/Mozart - Die Hochzeit Des Firago - Act IVb.mp3',
+        art     : 'https://music.cindr.media/music/mozart/mozart-161194_1280.png',
+        artist  : 'Wolfgang Amadeus Mozart',
+        name    : 'Die Hochzeit Des Firago - Act IVb',
+        duration: '4:11'
+      }
+    ]);
+    
+    // Since the design only supports one repeat value and expects it to be song, let's just skip playlist repeat.
+    $(cindrM).on('repeatchange', (event) => {
+      if (event.detail.repeat === 'playlist') {
+        cindrM.player.repeat('none');
+      }
+    });
+  });
+</script>
+</body>
+</html>

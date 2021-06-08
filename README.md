@@ -157,7 +157,8 @@ Enables management of the DOM for automated updates.  See [Controls](README.md#C
 
 The following options are available to customize the behavior of the UI management:
 
-- **repeatOrder**: This array specifies the order of [repeat types](README.md#cindrmplayerrepeatvalue) through which to cycle.  *Default order: ['none', 'song', 'playlist']*
+- **repeatOrder**: This array specifies the order of [repeat types](README.md#cindrmplayerrepeatvalue) through which to cycle.
+  - *Default order: ['none', 'song', 'playlist']*
 
 **NOTE:  Controls must be loaded into the DOM before this method is called in order for them to be managed by the library.**  All this method does is add the necessary event listeners.
 

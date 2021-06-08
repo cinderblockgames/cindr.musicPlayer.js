@@ -4,7 +4,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 
 - [Setup and Basics](README.md#setup-and-basics)
   - [CDN](README.md#cdn)
-  - [Using cindr.musicPlayer.js](README.md#usingcindrmusicplayerjs)
+  - [Using cindr.musicPlayer.js](README.md#using-cindrmusicplayerjs)
   - [Song-Object Structure](README.md#song-object-structure)
 - [Methods](README.md#methods)
   - [Song](README.md#song)

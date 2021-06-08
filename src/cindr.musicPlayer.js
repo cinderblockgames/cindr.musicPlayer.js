@@ -197,16 +197,19 @@ const cindrM = new EventTarget();
       const nodes = document.querySelectorAll('[data-cindrM-control~="repeat"]');
       if (type == 'none') {
         nodes.forEach(node => {
-          node.classList.remove('cindrM-repeating-playlist');
           node.classList.add('cindrM-repeating-none');
+          node.classList.remove('cindrM-repeating-song');
+          node.classList.remove('cindrM-repeating-playlist');
         });
       } else if (type == 'song') {
         nodes.forEach(node => {
           node.classList.remove('cindrM-repeating-none');
           node.classList.add('cindrM-repeating-song');
+          node.classList.remove('cindrM-repeating-playlist');
         });
       } else { // if (type == 'playlist')
         nodes.forEach(node => {
+          node.classList.remove('cindrM-repeating-none');
           node.classList.remove('cindrM-repeating-song');
           node.classList.add('cindrM-repeating-playlist');
         });
@@ -327,64 +330,121 @@ const cindrM = new EventTarget();
     }
   };
 
+  const build = {
+    detail: function detail(options) {
+      return { detail: options };
+    },
+
+    repeatOrder: function repeatOrder(options) {
+      if (options && options.repeatOrder) {
+        const valid = ['none', 'song', 'playlist'];
+        const order = options.repeatOrder;
+        const result = {};
+
+        for (let index = 0; index < order.length; index++) {
+          const value = order[index];
+          if (valid.includes(value)) {
+            if (result[value]) {
+              output.warn('Repeated value provided in options.repeatOrder; using default repeat order instead.', value);
+              return build.defaultRepeatOrder();
+            } else {
+              const next = (index + 1) < order.length ? (index + 1) : 0;
+              result[value] = order[next];
+            }
+          } else {
+            output.warn('Invalid value provided in options.repeatOrder; using default repeat order instead.', value);
+            return build.defaultRepeatOrder();
+          }
+        };
+
+        return result;
+      } else {
+        return build.defaultRepeatOrder();
+      }
+    },
+
+    defaultRepeatOrder: function defaultRepeatOrder() {
+      return {
+        'none'    : 'song',
+        'song'    : 'playlist',
+        'playlist': 'none'
+      };
+    }
+  };
+
   //******************************
   // Events.
   //******************************
 
   const events = {
-    raise: function raise(eventType, options) {
+    raise: function raise(eventType, detail) {
       cindr.dispatchEvent(
-        new CustomEvent(
-          eventType,
-          { detail: options }
-        )
+        new CustomEvent(eventType, detail)
       );
     },
-
+  
     // https://www.sitepoint.com/essential-audio-and-video-events-for-html5/
 
-    play: () => events.raise('play'),
+    play:           () => events.raise('play'                                          ),
+    pause:          () => events.raise('pause'                                         ),
+    end:            () => events.raise('end'                                           ),
+    timeupdate:     () => events.raise('timeupdate'    , events.detail.timeupdate()    ),
+    songchange:     () => events.raise('songchange'    , events.detail.songchange()    ),
+    playlistchange: () => events.raise('playlistchange', events.detail.playlistchange()),
+    shufflechange:  () => events.raise('shufflechange' , events.detail.shufflechange() ),
+    repeatchange:   () => events.raise('repeatchange'  , events.detail.repeatchange()  ),
+    volumechange:   () => events.raise('volumechange'  , events.detail.volumechange()  )
+  };
 
-    pause: () => events.raise('pause'),
+  events.detail = {
+    timeupdate: function timeupdate() {
+      return build.detail({
+        currentTime           : player.audio.currentTime,
+        'currentTime-readable': format.time(player.audio.currentTime),
+        duration              : player.audio.duration,
+        'duration-readable'   : format.time(player.audio.duration),
+        buffered              : player.audio.buffered
+      });
+    },
 
-    end: () => events.raise('end'),
+    songchange: function songchange() {
+      return build.detail({
+        song                  : player.playlist[player.index],
+        index                 : player.index,
+        'index-readable'      : player.index + 1,
+        currentTime           : player.audio.currentTime,
+        'currentTime-readable': format.time(player.audio.currentTime),
+        duration              : player.audio.duration,
+        'duration-readable'   : format.time(player.audio.duration)
+      });
+    },
 
-    timeupdate: () => events.raise('timeupdate', {
-      currentTime: player.audio.currentTime,
-      'currentTime-readable': format.time(player.audio.currentTime),
-      duration: player.audio.duration,
-      'duration-readable': format.time(player.audio.duration),
-      buffered: player.audio.buffered
-    }),
+    playlistchange: function playlistchange() {
+      return build.detail({
+        playlist        : player.playlist,
+        index           : player.index,
+        'index-readable': player.index + 1
+      });
+    },
 
-    songchange: () => events.raise('songchange', {
-      song: player.playlist[player.index],
-      index: player.index,
-      'index-readable': player.index + 1,
-      currentTime: player.audio.currentTime,
-      'currentTime-readable': format.time(player.audio.currentTime),
-      duration: player.audio.duration,
-      'duration-readable': format.time(player.audio.duration)
-    }),
+    shufflechange: function shufflechange() {
+      return build.detail({
+        shuffle: player.shuffle
+      });
+    },
 
-    playlistchange: () => events.raise('playlistchange', {
-      playlist: player.playlist,
-      index: player.index,
-      'index-readable': player.index + 1
-    }),
+    repeatchange: function repeatchange() {
+      return build.detail({
+        repeat: player.repeat
+      });
+    },
 
-    shufflechange: () => events.raise('shufflechange', {
-      shuffle: player.shuffle
-    }),
-
-    repeatchange: () => events.raise('repeatchange', {
-      repeat: player.repeat
-    }),
-
-    volumechange: () => events.raise('volumechange', {
-      volume: player.volume,
-      muted: player.muted
-    })
+    volumechange: function volumechange() {
+      return build.detail({
+        volume: player.volume,
+        muted : player.muted
+      });
+    }
   };
 
   //******************************
@@ -658,7 +718,7 @@ const cindrM = new EventTarget();
 
   // UI management.
   cindr.ui = {
-    monitor: function monitor() {
+    monitor: function monitor(options) {
       // Find and track the song list container, if there is one.
       const list = document.getElementById('cindrM-song-list-container');
       if (list) {
@@ -670,15 +730,22 @@ const cindrM = new EventTarget();
             songListTemplate: song.parentElement.removeChild(song)
           };
           cindr.addEventListener('playlistchange', update.songList);
+          if (player.playlist.length > 0) {
+            update.songList(events.detail.songchange()); // Set UI.
+          }
         }
       }
 
       // Track the current song info, if there are any elements that use it.
       if (document.querySelector('[data-cindrM-song-info]') || document.querySelector('[data-cindrM-song-meta]')) {
         cindr.addEventListener('songchange', update.currentSongInfo);
+        if (player.index > -1) {
+          update.currentSongInfo(events.detail.playlistchange()); // Set UI.
+        }
       }
       if (document.querySelector('[data-cindrM-song-meta]')) {
         cindr.addEventListener('timeupdate', update.currentTime);
+        update.currentTime(events.detail.timeupdate());
       }
 
       // Track controls for managing the player.
@@ -702,6 +769,7 @@ const cindrM = new EventTarget();
           })
         );
         cindr.addEventListener('pause', update.pauseControl);
+        update.pauseControl(); // Set UI.
 
         // stop
         document.querySelectorAll('[data-cindrM-control~="stop"]').forEach(node =>
@@ -731,17 +799,15 @@ const cindrM = new EventTarget();
         cindr.addEventListener('shufflechange', update.shuffleControl);
 
         // repeat
-        const nextRepeat = {
-          'none': 'song',
-          'song': 'playlist',
-          'playlist': 'none'
-        };
+        const nextRepeat = build.repeatOrder(options);
+        player.repeat = Object.keys(nextRepeat)[0]; // The first key is the default.
         document.querySelectorAll('[data-cindrM-control~="repeat"]').forEach(node =>
           node.addEventListener('click', function click() {
             cindr.player.repeat(nextRepeat[player.repeat]);
           })
         );
         cindr.addEventListener('repeatchange', update.repeatControl);
+        update.repeatControl(events.detail.repeatchange()); // Set UI.
 
         // volume
         document.querySelectorAll('[data-cindrM-control~="volume"]').forEach(node => {
@@ -754,6 +820,7 @@ const cindrM = new EventTarget();
           node.addEventListener('change', update); // Respond to the final value when the user stops updating the control.
         });
         cindr.addEventListener('volumechange', update.volumeControl);
+        update.volumeControl(events.detail.volumechange()); // Set UI.
 
         // mute
         document.querySelectorAll('[data-cindrM-control~="mute"]').forEach(node =>
@@ -786,10 +853,6 @@ const cindrM = new EventTarget();
 
         // buffer
         cindr.addEventListener('timeupdate', update.bufferControl);
-
-        // Assign starting classes.
-        events.pause();
-        events.repeatchange();
       }
     }
   };

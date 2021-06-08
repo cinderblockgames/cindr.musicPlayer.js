@@ -731,7 +731,7 @@ const cindrM = new EventTarget();
           };
           cindr.addEventListener('playlistchange', update.songList);
           if (player.playlist.length > 0) {
-            update.songList(events.detail.songchange()); // Set UI.
+            update.songList(events.detail.playlistchange()); // Set UI.
           }
         }
       }
@@ -740,7 +740,7 @@ const cindrM = new EventTarget();
       if (document.querySelector('[data-cindrM-song-info]') || document.querySelector('[data-cindrM-song-meta]')) {
         cindr.addEventListener('songchange', update.currentSongInfo);
         if (player.index > -1) {
-          update.currentSongInfo(events.detail.playlistchange()); // Set UI.
+          update.currentSongInfo(events.detail.songchange()); // Set UI.
         }
       }
       if (document.querySelector('[data-cindrM-song-meta]')) {

@@ -27,7 +27,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
     - [Shuffle](README.md#cindrmplayershuffleshuffle)
     - [Repeat One/All](README.md#cindrmplayerrepeatvalue)
   - [UI Management](README.md#ui-management)
-    - [Monitor UI](README.md#cindrmuimonitor)
+    - [Monitor UI](README.md#cindrmuimonitoroptions)
   - [Direct Access](README.md#direct-access)
     - [Get Internals](README.md#cindrmgetinternals)
 - [Events](README.md#events)
@@ -152,8 +152,12 @@ If value is provided, sets the repeat type to the provided value.  If value is n
 ## UI Management
 
 
-### cindrM.ui.monitor()
+### cindrM.ui.monitor(options)
 Enables management of the DOM for automated updates.  See [Controls](README.md#Controls) and [Display](README.md#Display) for information on how to set up your HTML to take advantage of this feature.
+
+The following options are available to customize the behavior of the UI management:
+
+- **repeatOrder**: This array specifies the order of [repeat types](README.md#cindrmplayerrepeatvalue) through which to cycle.
 
 **NOTE:  Controls must be loaded into the DOM before this method is called in order for them to be managed by the library.**  All this method does is add the necessary event listeners.
 
@@ -246,7 +250,7 @@ A previous control will skip to the [previous](README.md#cindrmsongprevious) son
 A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class **cindrM-shuffling** while shuffle is enabled.
 
 ### repeat
-A repeat control will cycle through [repeat](README.md#cindrmplayerrepeatvalue) options in the following order: none -> song -> playlist -> none.  It will also have a class based on the current repeat type: **cindrM-repeating-none**, **cindrM-repeating-song**, or **cindrM-repeating-playlist**.
+A repeat control will cycle through [repeat types](README.md#cindrmplayerrepeatvalue) in the following order: none -> song -> playlist -> none.  (This order can be changed when calling [monitor](README.md#cindrmuimonitoroptions).)  It will also have a class based on the current repeat type: **cindrM-repeating-none**, **cindrM-repeating-song**, or **cindrM-repeating-playlist**.
 
 ### volume
 A volume control will [unmute](README.md#cindrmplayermutemute) the player and set the volume to its current value on click and on change.

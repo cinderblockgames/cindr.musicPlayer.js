@@ -3,6 +3,8 @@
 A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://music.cindr.media.
 
 - [Setup and Basics](README.md#setup-and-basics)
+  - [CDN](README.md#cdn)
+  - [Using cindr.musicPlayer.js](README.md#usingcindrmusicplayerjs)
   - [Song-Object Structure](README.md#song-object-structure)
 - [Methods](README.md#methods)
   - [Song](README.md#song)
@@ -61,6 +63,14 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 
 # Setup and Basics
 
+## CDN
+cindr.musicPlayer.js is served by [jsDelivr](https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js/):
+
+    <script src="https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js@0.9.1/src/cindr.musicPlayer.min.js" type="text/javascript" crossorigin="anonymous"></script>
+
+## Using cindr.musicPlayer.js
+Once you've added the script to your page, you have access to the **cindrM** object, which is your interface to the [Methods](README.md#methods) and [Events](README.md#events) provided.  For a quick setup example, take a look at the [demo JSFiddle](https://jsfiddle.net/cinderblockgames/q7d6ejg5/), which makes use of the [cindrM.playlist.replace()](README.md#cindrmplaylistreplacesongs) and [cindrM.ui.monitor()](README.md#cindrmuimonitoroptions) methods and the [Display](README.md#display) options to quickly set up a functional music player.
+
 ## Song-Object Structure
 All songs are **required** to have a **url** property, so a minimum song object might look like this:
 
@@ -68,7 +78,7 @@ All songs are **required** to have a **url** property, so a minimum song object 
       'url': '/music/Metallica/Metallica/Wherever I May Roam.mp3'
     }
 
-However, you can build out the song object with any additional properties you need, and all of the properties will be available to you via [display attributes](README.md#song-info) and anywhere you are provided the song or the playlist.
+However, you can build out the song object with any additional properties you need, and all of the properties will be available to you via [display attributes](README.md#song-info) and anywhere you are provided the song or playlist.
 
 # Methods
 

@@ -345,6 +345,4 @@ For example:
       </div>
     </div>
 
-The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  The repeated elements will have their index appended to their ID, so the element for the first song will be **id="cindrM-song-container-0"**, and their **data-cindrM-song-*** elements will be removed after the relevant data has been set.
-
-Also, the current song element will have the class **cindrM-current-song**.
+The **cindrM-song-container** will be repeated for every song in the playlist and placed inside the **cindrM-song-list-container**.  The repeated elements will have their index appended to their ID, so the element for the first song will be **id="cindrM-song-container-0"**.  The repeated elements will also have their **data-cindrM-song-info** and **data-cindrM-song-meta** attributes be removed after the relevant data has been set, and the current song element will have the class **cindrM-current-song**.

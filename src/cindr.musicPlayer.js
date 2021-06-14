@@ -307,7 +307,8 @@ const cindrM = new EventTarget();
       if (clean) {
         for (let index = node.attributes.length - 1; index >= 0; index--) {
           const attr = node.attributes[index].nodeName;
-          if (attr.startsWith('data-cindr')) {
+          if (['data-cindrM-song-info', 'data-cindrM-song-meta',
+               'data-cindrm-song-info', 'data-cindrm-song-meta'].includes(attr)) {
             node.removeAttribute(attr);
           }
         }

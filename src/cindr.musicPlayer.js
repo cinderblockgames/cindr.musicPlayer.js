@@ -15,6 +15,7 @@ const cindrM = new EventTarget();
 
   const player = {
     audio: document.createElement('audio'),
+    playing: false,
 
     volume: -1,
     muted: false,
@@ -36,13 +37,13 @@ const cindrM = new EventTarget();
   // Continue playing through the playlist.
   player.audio.addEventListener('ended', () => {
     if (player.repeat == 'song') {
-      cindr.song.play();
+      cindr.playlist.seek(playlist.index);
     } else if (!player.shuffle && (player.index + 1) < player.playlist.length) {
       cindr.song.next();
     } else if (player.shuffle && (player.shuffled.indexOf(player.index) + 1) < player.shuffled.length) {
       cindr.song.next();
     } else if (player.repeat == 'playlist') {
-      cindr.playlist.play();
+      cindr.playlist.seek(0);
     } else {
       cindr.song.stop();
     }
@@ -109,14 +110,22 @@ const cindrM = new EventTarget();
     // Helpers.
 
     play: function play(index) {
+      const play = player.playing;
+
       player.index = player.shuffled[index];
       player.audio.pause();
       player.audio.currentTime = 0;
       player.audio.src = player.playlist[player.index].url;
-      player.audio.play();
+
+      if (play) {
+        player.audio.play();
+      }
 
       events.songchange();
-      events.play();
+
+      if (play) {
+        events.play();
+      }
     }
 
   };
@@ -207,7 +216,7 @@ const cindrM = new EventTarget();
           node.classList.add('cindrM-repeating-song');
           node.classList.remove('cindrM-repeating-playlist');
         });
-      } else { // if (type == 'playlist')
+      } else if (type == 'playlist') {
         nodes.forEach(node => {
           node.classList.remove('cindrM-repeating-none');
           node.classList.remove('cindrM-repeating-song');
@@ -298,7 +307,8 @@ const cindrM = new EventTarget();
       if (clean) {
         for (let index = node.attributes.length - 1; index >= 0; index--) {
           const attr = node.attributes[index].nodeName;
-          if (attr.startsWith('data-')) {
+          if (['data-cindrM-song-info', 'data-cindrM-song-meta',
+               'data-cindrm-song-info', 'data-cindrm-song-meta'].includes(attr)) {
             node.removeAttribute(attr);
           }
         }
@@ -455,52 +465,66 @@ const cindrM = new EventTarget();
   cindr.song = {
 
     play: function play() {
-      if (player.playlist.length >= 0) {
+      if (player.playlist.length == 0) {
+        output.warn('Playlist empty; ignoring call to song.play().');
+      } else if (player.playing) {
+        output.info('Already playing; ignoring call to song.play().');
+      } else {
         if (player.index > -1) {
           player.audio.play();
+          player.playing = true;
           events.play();
         } else {
           cindr.playlist.play();
         }
-      } else {
-        output.warn('Playlist empty; ignoring call to song.play().');
       }
     },
 
     pause: function pause() {
-      if (player.playlist.length >= 0) {
-        player.audio.pause();
-        events.pause();
-      } else {
+      if (player.playlist.length == 0) {
         output.warn('Playlist empty; ignoring call to song.pause().');
+      } else if (!player.playing) {
+        output.info('Already paused; ignoring call to song.pause().');
+      } else {
+        player.audio.pause();
+        player.playing = false;
+        events.pause();
       }
     },
 
     stop: function stop() {
-      if (player.playlist.length >= 0) {
+      if (player.playlist.length == 0) {
+        output.warn('Playlist empty; ignoring call to song.stop().');
+      } else if (!player.playing) {
+        if (player.audio.currentTime == 0) {
+          output.info('Already stopped; ignoring call to song.stop().');
+        } else {
+          player.audio.currentTime = 0;
+        }
+      } else {
         cindr.song.pause();
         player.audio.currentTime = 0;
-      } else {
-        output.warn('Playlist empty; ignoring call to song.stop().');
       }
     },
 
     next: function next() {
-      if (player.playlist.length > 0) {
+      if (player.playlist.length == 0) {
+        output.warn('Playlist empty; ignoring call to song.next().');
+      } else {
         if (player.shuffle) {
           shuffler.next();
         } else if ((player.index + 1) < player.playlist.length) {
           cindr.playlist.seek(player.index + 1);
         } else {
-          cindr.playlist.play();
+          cindr.playlist.seek(0);
         }
-      } else {
-        output.warn('Playlist empty; ignoring call to song.next().');
       }
     },
 
     previous: function previous() {
-      if (player.playlist.length > 0) {
+      if (player.playlist.length == 0) {
+        output.warn('Playlist empty; ignoring call to song.previous().');
+      } else {
         if (player.audio.currentTime > 2 && player.audio.duration > 2) {
           // If we're over two seconds into the song, start it over.
           player.audio.currentTime = 0;
@@ -511,10 +535,6 @@ const cindrM = new EventTarget();
         } else {
           cindr.playlist.seek(player.playlist.length - 1);
         }
-        events.songchange();
-      }
-      else {
-        output.warn('Playlist empty; ignoring call to song.previous().');
       }
     },
 
@@ -584,18 +604,15 @@ const cindrM = new EventTarget();
           removed = player.playlist.splice(index, 1);
           player.index--;
         } else if (index == player.index) {
-          player.audio.pause();
-          player.audio.currentTime = 0;
           if ((player.index + 1) < player.playlist.length) {
             removed = player.playlist.splice(index, 1);
             cindr.playlist.seek(player.index);
-          } else if (player.index > 0) {
+          } else {
+            if (player.playing) {
+              cindr.song.stop();
+            }
             removed = player.playlist.splice(index, 1);
             player.index--;
-          } else { // if player.index == 0
-            removed = player.playlist;
-            player.index = -1;
-            player.playlist = [];
           }
         } else { // if (index > player.index)
           removed = player.playlist.splice(index, 1);
@@ -616,8 +633,9 @@ const cindrM = new EventTarget();
     },
 
     replace: function replace(songs) {
-      player.audio.pause();
-      player.audio.currentTime = 0;
+      if (player.playing) {
+        player.song.stop();
+      }
 
       if (songs.length > 0) {
         player.index = 0;
@@ -636,6 +654,7 @@ const cindrM = new EventTarget();
 
     play: function play() {
       if (player.playlist.length > 0) {
+        player.playing = true; // Set to true before calling seek so that seek plays the song.
         cindr.playlist.seek(0);
       } else {
         output.warn('Playlist empty; ignoring call to playlist.play().');
@@ -644,15 +663,23 @@ const cindrM = new EventTarget();
 
     seek: function seek(index) {
       if (strict.gte(index, 0) && strict.lt(index, player.playlist.length)) {
+        const play = player.playing;
+
         player.index = index;
         player.audio.pause();
         player.audio.currentTime = 0;
         player.audio.src = player.playlist[player.index].url;
-        player.audio.play();
+
+        if (play) {
+          player.audio.play();
+        }
 
         shuffler.reset();
         events.songchange();
-        events.play();
+
+        if (play) {
+          events.play();
+        }
       } else {
         output.warn('Ignoring invalid value sent to playlist.seek(index).', index);
       }
@@ -752,43 +779,31 @@ const cindrM = new EventTarget();
       if (document.querySelector('[data-cindrM-control]')) {
         // play
         document.querySelectorAll('[data-cindrM-control~="play"]').forEach(node =>
-          node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-playing')) {
-              cindr.song.play();
-            }
-          })
+          node.addEventListener('click', cindr.song.play)
         );
         cindr.addEventListener('play', update.playControl);
 
         // pause
         document.querySelectorAll('[data-cindrM-control~="pause"]').forEach(node =>
-          node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-paused')) {
-              cindr.song.pause();
-            }
-          })
+          node.addEventListener('click', cindr.song.pause)
         );
         cindr.addEventListener('pause', update.pauseControl);
         update.pauseControl(); // Set UI.
 
         // stop
         document.querySelectorAll('[data-cindrM-control~="stop"]').forEach(node =>
-          node.addEventListener('click', function click() {
-            if (!this.classList.contains('cindrM-paused')) {
-              cindr.song.stop();
-            }
-          })
+          node.addEventListener('click', cindr.song.stop)
         );
 
         // next
-        document.querySelectorAll('[data-cindrM-control~="next"]').forEach(node => {
-          node.addEventListener('click', cindr.song.next);
-        });
+        document.querySelectorAll('[data-cindrM-control~="next"]').forEach(node =>
+          node.addEventListener('click', cindr.song.next)
+        );
 
         // previous
-        document.querySelectorAll('[data-cindrM-control~="previous"]').forEach(node => {
-          node.addEventListener('click', cindr.song.previous);
-        });
+        document.querySelectorAll('[data-cindrM-control~="previous"]').forEach(node =>
+          node.addEventListener('click', cindr.song.previous)
+        );
 
         // shuffle
         document.querySelectorAll('[data-cindrM-control~="shuffle"]').forEach(node =>

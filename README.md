@@ -96,10 +96,10 @@ Pauses the current song.
 Pauses the current song and resets the current time to zero.
 
 ### `cindrM.song.next()`
-Plays the next song in the playlist, cycling back to the beginning of the playlist if the current song is the last song in the playlist.
+Skips to the next song in the playlist, cycling back to the beginning of the playlist if the current song is the last song in the playlist.
 
 ### `cindrM.song.previous()`
-Plays the previous song in the playlist, cycling back to the end of the playlist if the current song is the first song in the playlist.
+In the first two seconds of the current song, skips to the previous song in the playlist, cycling back to the end of the playlist if the current song is the first song in the playlist.  After the first two seconds of the current song, restarts the current song.
 
 ### `cindrM.song.seekPercent(percent)`
 *Valid values: [`0`, `100`]*
@@ -120,7 +120,7 @@ Adds the provided song to the end of the playlist.
 Inserts the provided song at the specified (zero-based) index, pushing back any songs at or above the specified index.
 
 ### `cindrM.playlist.remove(index)`
-Removes the song at the specified (zero-based) index and returns it.  If the removed song is the current song, the next song (if any) will start playing.
+Removes the song at the specified (zero-based) index and returns it.  If the removed song is the current song, skips to the next song (if any).
 
 ### `cindrM.playlist.clear()`
 Removes all songs from the playlist.
@@ -132,7 +132,7 @@ Replaces the playlist with the provided set of songs.
 Plays the first song in the playlist.
 
 ### `cindrM.playlist.seek(index)`
-Plays the song at the specified (zero-based) index.
+Skips to the song at the specified (zero-based) index.
 
 
 ## Player
@@ -177,7 +177,10 @@ The following options are available to customize the behavior of the UI manageme
 
 
 ### `cindrM.getInternals()`
-Returns the internal tracking object used by cindr.musicPlayer.js.  If you need direct access to the audio element, you can find it by calling `cindrM.getInternals().audio`.
+Returns the internal tracking object used by cindr.musicPlayer.js.  The following properties may be of interest:
+
+- `cindrM.getInternals().audio` provides direct access to the audio element.
+- `cindrM.getInternals().playing` indicates whether the player is currently playing.
 
 **NOTE:  Making changes to the internal tracking object is unsupported and can result in unpredictable behavior.**
 
@@ -255,7 +258,7 @@ A stop control will [stop](README.md#cindrmsongstop) the current song on click. 
 A next control will skip to the [next](README.md#cindrmsongnext) song on click.
 
 ### `previous`
-A previous control will skip to the [previous](README.md#cindrmsongprevious) song on click.
+In the first two seconds of the current song, a previous control will skip to the [previous](README.md#cindrmsongprevious) song on click.  After the first two seconds of the current song, a previous control will restart the current song on click.
 
 ### `shuffle`
 A shuffle control will [shuffle or unshuffle](README.md#cindrmplayershuffleshuffle) the playlist on click.  It will also have the class `cindrM-shuffling` while shuffle is enabled.

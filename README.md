@@ -66,7 +66,7 @@ A plain-JavaScript, no-external-references, music-player-management library, a d
 ## CDN
 cindr.musicPlayer.js is served by [jsDelivr](https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js/):
 
-    <script src="https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js@0.9.1/src/cindr.musicPlayer.min.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cinderblockgames/cindr.musicPlayer.js@1.0.0/src/cindr.musicPlayer.min.js" type="text/javascript" crossorigin="anonymous"></script>
 
 ## Using cindr.musicPlayer.js
 Once you've added the script to your page, you have access to the `cindrM` object, which is your interface to the [Methods](README.md#methods) and [Events](README.md#events) provided.  For a quick setup example, take a look at the [demo JSFiddle](https://jsfiddle.net/cinderblockgames/q7d6ejg5/), which makes use of the [`replace`](README.md#cindrmplaylistreplacesongs) and [`monitor`](README.md#cindrmuimonitoroptions) methods and the [Display](README.md#display) options to quickly set up a functional music player.

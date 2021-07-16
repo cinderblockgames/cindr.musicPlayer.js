@@ -634,7 +634,7 @@ const cindrM = new EventTarget();
 
     replace: function replace(songs) {
       if (player.playing) {
-        player.song.stop();
+        player.audio.pause();
       }
 
       if (songs.length > 0) {

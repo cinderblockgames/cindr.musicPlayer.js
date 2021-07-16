@@ -645,7 +645,7 @@ const cindrM = new EventTarget();
       } else {
         player.index = -1;
         player.playlist = [];
-        player.audio.src = null;
+        player.audio.src = '';
       }
 
       shuffler.reset();

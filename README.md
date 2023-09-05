@@ -1,6 +1,6 @@
 # cindr.musicPlayer.js [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/) [![](https://data.jsdelivr.com/v1/package/gh/cinderblockgames/cindr.musicPlayer.js/badge)](https://www.jsdelivr.com/package/gh/cinderblockgames/cindr.musicPlayer.js?path=src)
 
-A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://music.cindr.media.
+A plain-JavaScript, no-external-references, music-player-management library, a demo of which can be found at https://cinderblockgames.github.io/cindr.musicPlayer.js/.
 
 - [Setup and Basics](README.md#setup-and-basics)
   - [CDN](README.md#cdn)
